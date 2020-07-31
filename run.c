@@ -23,11 +23,15 @@ THIS SOFTWARE.
 ****************************************************************/
 
 #define DEBUG
+#include "config.h"
+#include "compat.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <errno.h>
+#ifdef WANT_WCHAR
 #include <wchar.h>
 #include <wctype.h>
+#endif
 #include <fcntl.h>
 #include <setjmp.h>
 #include <limits.h>
@@ -1519,19 +1523,24 @@ static char *nawk_convert(const char *s, int (*fun_c)(int),
 {
 	char *buf      = NULL;
 	char *pbuf     = NULL;
+#ifdef WANT_WCHAR
 	const char *ps = NULL;
 	size_t n       = 0;
 	mbstate_t mbs, mbs2;
 	wchar_t wc;
 	size_t sz = MB_CUR_MAX;
+#endif
 
+#ifdef WANT_WCHAR
 	if (sz == 1) {
+#endif
 		buf = tostring(s);
 
 		for (pbuf = buf; *pbuf; pbuf++)
 			*pbuf = fun_c((uschar)*pbuf);
 
 		return buf;
+#ifdef WANT_WCHAR
 	} else {
 		/* upper/lower character may be shorter/longer */
 		buf = tostringN(s, strlen(s) * sz + 1);
@@ -1560,16 +1569,25 @@ static char *nawk_convert(const char *s, int (*fun_c)(int),
 
 		return buf;
 	}
+#endif
 }
 
 static char *nawk_toupper(const char *s)
 {
+#ifdef WANT_WCHAR
 	return nawk_convert(s, toupper, towupper);
+#else
+	return nawk_convert(s, toupper, NULL);
+#endif
 }
 
 static char *nawk_tolower(const char *s)
 {
+#ifdef WANT_WCHAR
 	return nawk_convert(s, tolower, towlower);
+#else
+	return nawk_convert(s, tolower, NULL);
+#endif
 }
 
 Cell *bltin(Node **a, int n)	/* builtin functions. a[0] is type, a[1] is arg list */
