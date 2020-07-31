@@ -7,7 +7,7 @@
 #define CONFIG_H
 
 #define WANT_WCHAR
-#undef WANT_WCHAR
+//#undef WANT_WCHAR
 
 #endif  /* CONFIG_H */
 
