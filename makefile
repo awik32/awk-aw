@@ -36,7 +36,8 @@ CC = $(HOSTCC)  # change this is cross-compiling.
 
 # By fiat, to make our lives easier, yacc is now defined to be bison.
 # If you want something else, you're on your own.
-YACC = bison -d
+#YACC = bison -d
+YACC = byacc -d
 
 OFILES = b.o main.o parse.o proctab.o tran.o lib.o run.o lex.o
 
@@ -56,6 +57,8 @@ $(OFILES):	awk.h awkgram.tab.h proto.h
 
 awkgram.tab.c awkgram.tab.h:	awk.h proto.h awkgram.y
 	$(YACC) $(YFLAGS) awkgram.y
+	mv y.tab.c awkgram.tab.c
+	mv y.tab.h awkgram.tab.h
 
 proctab.c:	maketab
 	./maketab awkgram.tab.h >proctab.c

@@ -25,7 +25,8 @@ THIS SOFTWARE.
 /*
  * this program makes the table to link function names
  * and type indices that is used by execute() in run.c.
- * it finds the indices in awkgram.tab.h, produced by bison.
+ * it finds the indices in awkgram.tab.h, produced by
+ * yacc (byacc) or bison.
  */
 
 #include <stdio.h>
