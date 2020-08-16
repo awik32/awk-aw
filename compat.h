@@ -6,9 +6,20 @@
 #ifndef COMPAT_H
 #define COMPAT_H
 
-#ifndef WANT_WCHAR
+#ifdef	WANT_WCHAR
+
+#ifdef __DJGPP__
+#include <ctype.h>
+#include <wchar.h>
+#define	NEED_TOWUPPER
+wint_t towupper(wint_t wc);
+#define	NEED_TOWLOWER
+wint_t towlower(wint_t wc);
+#endif	/* if __DJGPP__ */
+
+#else	/* else == !WANT_WCHAR */
 typedef unsigned char wint_t;
-#endif
+#endif  /* WANT_WCHAR */
 
 #endif  /* COMPAT_H */
 

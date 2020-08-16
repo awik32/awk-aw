@@ -39,10 +39,10 @@ CC = $(HOSTCC)  # change this is cross-compiling.
 #YACC = bison -d
 YACC = byacc -d
 
-OFILES = b.o main.o parse.o proctab.o tran.o lib.o run.o lex.o
+OFILES = b.o main.o parse.o proctab.o tran.o lib.o run.o lex.o compat.o
 
 SOURCE = awk.h awkgram.tab.c awkgram.tab.h proto.h awkgram.y lex.c b.c main.c \
-	maketab.c parse.c lib.c run.c tran.c proctab.c
+	maketab.c parse.c lib.c run.c tran.c proctab.c compat.c
 
 LISTING = awk.h proto.h awkgram.y lex.c b.c main.c maketab.c parse.c \
 	lib.c run.c tran.c
